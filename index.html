@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MorphoLearn - Morphological Error Checker</title>
+  <title>MorphoLearn v3.0 – Morphological Error Checker</title>
   <style>
     body {
       font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #0a0a0a, #1c1c1c);
-      color: #f1f1f1;
+      background: linear-gradient(135deg, #0a0a0a, #121212);
+      color: #f8f8f8;
       text-align: center;
       margin: 0;
       padding: 0;
@@ -16,34 +16,34 @@
 
     header {
       background: #007bff;
-      padding: 20px;
+      padding: 25px;
       color: white;
-      font-size: 26px;
-      font-weight: 600;
+      font-size: 28px;
+      font-weight: 700;
       letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
     main {
       margin: 40px auto;
       width: 90%;
-      max-width: 800px;
-      background: #121212;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+      max-width: 850px;
+      background: #181818;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,123,255,0.25);
     }
 
     textarea {
       width: 100%;
       height: 180px;
-      margin-top: 10px;
       font-size: 16px;
       padding: 12px;
       border-radius: 8px;
       border: none;
       outline: none;
       resize: vertical;
-      background: #1e1e1e;
+      background: #202020;
       color: #f1f1f1;
     }
 
@@ -51,7 +51,7 @@
       background: #007bff;
       color: white;
       border: none;
-      padding: 12px 30px;
+      padding: 12px 35px;
       margin-top: 20px;
       border-radius: 6px;
       cursor: pointer;
@@ -71,7 +71,8 @@
       background: #1e1e1e;
       padding: 20px;
       border-radius: 8px;
-      min-height: 100px;
+      min-height: 120px;
+      line-height: 1.6;
     }
 
     mark {
@@ -82,10 +83,10 @@
     }
 
     footer {
-      margin-top: 50px;
+      margin-top: 60px;
       padding: 20px;
       font-size: 14px;
-      color: #999;
+      color: #aaa;
     }
 
     .title {
@@ -95,23 +96,35 @@
     }
 
     ul {
-      list-style-type: "⚠️ ";
-      padding-left: 20px;
+      list-style-type: "🔹 ";
+      padding-left: 25px;
+    }
+
+    .score-box {
+      background: #0d6efd;
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 30px;
+      margin-top: 20px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      box-shadow: 0 0 10px rgba(13,110,253,0.5);
     }
   </style>
 </head>
 <body>
-  <header>🧠 MorphoLearn - Morphological Error Checker</header>
+  <header>🧠 MorphoLearn v3.0 – Intelligent Morphological Error Checker</header>
 
   <main>
-    <div class="title">Analyze Your Essay for Morphological Errors</div>
+    <div class="title">Analyze your essay like a pro</div>
     <textarea id="essay" placeholder="Type or paste your essay here..."></textarea><br>
     <button onclick="checkErrors()">Check Errors</button>
 
     <div id="result"></div>
   </main>
 
-  <footer>Created by <b>John Oshle Lopinac</b> © 2025 | MorphoLearn v2.0</footer>
+  <footer>Created by <b>John Oshle Lopinac</b> © 2025 | MorphoLearn v3.0</footer>
 
   <script>
     function checkErrors() {
@@ -125,44 +138,65 @@
       }
 
       let output = text;
+      let errorCount = 0;
 
-      // 🔍 Comprehensive morphological error patterns
-      const patterns = {
-        "Plural Errors": /\b(\w+ss|s{2,})\b/g,
-        "Verb Tense Errors": /\b(runned|goed|eated|throwed|buyed|cuted)\b/gi,
-        "Prefix Errors": /\b(unpossible|irregularr|disagreee|rebuilded)\b/gi,
-        "Suffix Errors": /\b(beautifull|helpness|friendity|quicklier)\b/gi,
-        "Derivational Errors": /\b(kindful|talkness|angrify|sadify)\b/gi
-      };
+      // 🧩 Smart morphological error patterns with explanations and corrections
+      const patterns = [
+        { regex: /\b(runned)\b/gi, type: "Verb Tense", suggestion: "ran", explanation: "Incorrect past tense form of 'run'." },
+        { regex: /\b(goed)\b/gi, type: "Verb Tense", suggestion: "went", explanation: "Incorrect past tense form of 'go'." },
+        { regex: /\b(eated)\b/gi, type: "Verb Tense", suggestion: "ate", explanation: "Incorrect past tense form of 'eat'." },
+        { regex: /\b(throwed)\b/gi, type: "Verb Tense", suggestion: "threw", explanation: "Incorrect past tense form of 'throw'." },
+        { regex: /\b(buyed)\b/gi, type: "Verb Tense", suggestion: "bought", explanation: "Incorrect past tense form of 'buy'." },
+        { regex: /\b(cuted)\b/gi, type: "Verb Tense", suggestion: "cute", explanation: "The word 'cuted' does not exist." },
+        { regex: /\b(beautifull)\b/gi, type: "Suffix Error", suggestion: "beautiful", explanation: "Remove the extra 'l'." },
+        { regex: /\b(helpness)\b/gi, type: "Derivational", suggestion: "helplessness", explanation: "Use correct suffix for noun formation." },
+        { regex: /\b(kindful)\b/gi, type: "Derivational", suggestion: "kind", explanation: "The word 'kindful' is nonstandard." },
+        { regex: /\b(quicklier)\b/gi, type: "Comparative Error", suggestion: "more quickly", explanation: "Use 'more quickly' for adverbs." },
+        { regex: /\b(unpossible)\b/gi, type: "Prefix Error", suggestion: "impossible", explanation: "Use 'im-' instead of 'un-' prefix." },
+        { regex: /\b(disagreee)\b/gi, type: "Prefix Error", suggestion: "disagree", explanation: "Remove extra 'e'." },
+        { regex: /\b(friendity)\b/gi, type: "Suffix Error", suggestion: "friendship", explanation: "Incorrect noun formation." }
+      ];
 
-      let errors = [];
+      let detected = [];
 
-      // Highlight matches
-      for (let [type, regex] of Object.entries(patterns)) {
-        const matches = text.match(regex);
+      for (const rule of patterns) {
+        const matches = text.match(rule.regex);
         if (matches) {
           matches.forEach(word => {
             const marked = `<mark>${word}</mark>`;
             const safeWord = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
             const wordRegex = new RegExp(`\\b${safeWord}\\b`, "g");
             output = output.replace(wordRegex, marked);
-            errors.push(`${word} → possible <b>${type}</b>`);
+            errorCount++;
+            detected.push({
+              word,
+              type: rule.type,
+              suggestion: rule.suggestion,
+              explanation: rule.explanation
+            });
           });
         }
       }
 
-      if (errors.length === 0) {
-        resultDiv.innerHTML = "<p>✅ No morphological errors detected!</p>";
-      } else {
-        resultDiv.innerHTML = `
-          <p><b>Detected Errors:</b></p>
-          <ul>${errors.map(e => `<li>${e}</li>`).join("")}</ul>
-          <hr>
-          <p>${output}</p>
-        `;
+      if (detected.length === 0) {
+        resultDiv.innerHTML = "<p>✅ No morphological errors detected! Excellent job!</p>";
+        return;
       }
+
+      // 🧮 Score calculation
+      const words = text.split(/\s+/).length;
+      const accuracy = Math.max(0, Math.round(100 - (errorCount / words) * 100));
+
+      resultDiv.innerHTML = `
+        <p><b>Detected Errors:</b></p>
+        <ul>
+          ${detected.map(e => `<li><b>${e.word}</b> → ${e.type} | Suggestion: <b>${e.suggestion}</b><br><i>${e.explanation}</i></li>`).join("")}
+        </ul>
+        <div class="score-box">Accuracy Score: ${accuracy}%</div>
+        <hr>
+        <p>${output}</p>
+      `;
     }
   </script>
 </body>
 </html>
-
