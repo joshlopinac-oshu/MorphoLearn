@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn Morphology | MorphoLearn</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Learn About Morphological Errors</h1>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Inflectional and Derivational Errors</h2>
+      <p>
+        Morphological errors occur when learners use incorrect word forms. 
+        These errors may involve inflectional morphemes (e.g., tense or plural forms) 
+        or derivational morphemes (e.g., prefixes or suffixes that change word class).
+      </p>
+      <textarea id="textInput" placeholder="Type your sentence here..."></textarea>
+      <button id="checkBtn">Check Errors</button>
+      <div id="output"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 MorphoLearn</p>
+  </footer>
+
+  <script>
+    const btn = document.getElementById("checkBtn");
+    const input = document.getElementById("textInput");
+    const output = document.getElementById("output");
+
+    btn.addEventListener("click", () => {
+      const text = input.value.trim();
+      if (!text) {
+        output.innerHTML = "<p>Please enter some text.</p>";
+        return;
+      }
+      // Simple mock feedback
+      output.innerHTML = `<p>✅ No major morphological errors detected. Keep practicing!</p>`;
+    });
+  </script>
+</body>
+</html>
